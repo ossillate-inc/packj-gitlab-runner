@@ -10,6 +10,7 @@ packj-audit-job:
     - python3 -m venv venv
     - source ./venv/bin/activate
     - pip3 install -r ./packj/requirements.txt
+    - ls -al
     - python3 ./packj/main.py audit -f requirements.txt
 
 comment-job:
