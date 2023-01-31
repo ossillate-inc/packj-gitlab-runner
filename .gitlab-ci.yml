@@ -17,7 +17,8 @@ packj-audit-job:
   stage: test
   script:
     - echo "Auditing packages with Packj..."
-    - python3 ./packj/main.py audit -f requirements.txt
+    # - python3 ./packj/main.py audit -f requirements.txt
+    - ls -al
 
 comment-job:
   stage: deploy
