@@ -9,7 +9,8 @@ packj-audit-job:
     - git clone https://github.com/ossillate-inc/packj
     - python3 -m venv venv
     - source ./venv/bin/activate
-    - pip3 install -r ./packj/requirements.txt
+    - pip install --upgrade pip
+    - pip install -r ./packj/requirements.txt
     - ls -al
     - python3 ./packj/main.py audit -f requirements.txt
 
