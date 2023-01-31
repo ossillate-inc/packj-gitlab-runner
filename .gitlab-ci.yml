@@ -6,13 +6,11 @@ packj-audit-job:
   stage: audit
   image: python:latest
   script:
-    # - apt-get install python3-venv
     - git clone https://github.com/ossillate-inc/packj
-    # - python3 -m venv venv
-    # - source ./venv/bin/activate
+    - python3 -m venv venv
+    - source ./venv/bin/activate
     - pip3 install -r ./packj/requirements.txt
-    # - python3 ./packj/main.py audit -f requirements.txt
-    - ls -al
+    - python3 ./packj/main.py audit -f requirements.txt
 
 comment-job:
   stage: deploy
