@@ -9,7 +9,8 @@ packj-audit-job:
     - docker:dind # necessary for docker run
 
   script:
-    - docker run -d --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest help
+    - ls -al
+    - docker run --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest
     - docker cp ./requirements.txt packj-container:/tmp/requirements.txt
     - docker start packj-container
     - docker exec -t packj-container sh -c "ls -al"
