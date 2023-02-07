@@ -1,10 +1,19 @@
-stages: # List of stages for jobs, and their order of execution
-  - audit
-  - deploy
+# create the job called deploy
+deploy:
+  #   which is run in the "deploy" stage
+  #     "deploy" stage is one of the pre-defined stages
+  #     docs: https://docs.gitlab.com/ee/ci/yaml/#stages
+  stage: deploy
 
-packj-audit-job:
-  stage: audit
+  # Use the latest python image
   image: python:latest
+
+  #   only runs on push event on branch "main"
+  #     docs: https://docs.gitlab.com/ee/ci/yaml/index.html#onlyrefs--exceptrefs
+  only:
+    - pushes
+    - main
+
   script:
     - git clone https://github.com/ossillate-inc/packj
     - python3 -m venv venv
@@ -13,9 +22,3 @@ packj-audit-job:
     - pip install -r ./packj/requirements.txt
     - ls -al
     - python3 ./packj/main.py audit -f requirements.txt
-
-comment-job:
-  stage: deploy
-  environment: production
-  script:
-    - echo "Adding comment to PR..."

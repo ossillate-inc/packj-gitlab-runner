@@ -1,0 +1,21 @@
+stages: # List of stages for jobs, and their order of execution
+  - audit
+  - deploy
+
+packj-audit-job:
+  stage: audit
+  image: python:latest
+  script:
+    - git clone https://github.com/ossillate-inc/packj
+    - python3 -m venv venv
+    - source ./venv/bin/activate
+    - pip install --upgrade pip
+    - pip install -r ./packj/requirements.txt
+    - ls -al
+    - python3 ./packj/main.py audit -f requirements.txt
+
+comment-job:
+  stage: deploy
+  environment: production
+  script:
+    - echo "Adding comment to PR..."
