@@ -10,8 +10,10 @@ packj-audit-job:
 
   script:
     - docker run --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest
-    - docker cp ./requirements.txt packj-container:/tmp/packj/requirements.txt
-    - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f pypi:/tmp/packj/requirements.txt
+    - docker cp ./requirements.txt packj-container:requirements.txt
+    - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f pypi:requirements.txt
+    # - docker cp ./requirements.txt packj-container:/tmp/packj/requirements.txt
+    # - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f pypi:/tmp/packj/requirements.txt
 
 comment-job:
   stage: deploy
