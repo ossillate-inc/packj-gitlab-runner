@@ -1,16 +1,23 @@
 stages: # List of stages for jobs, and their order of execution
+  - build
   - audit
   - deploy
+
+mount-docker-volume:
+  stage: build
+  image: docker:20.10.16
+  services:
+    - docker:dind # necessary for docker run
+  # variables:
+  #   FF_NETWORK_PER_BUILD: "true" # activate container-to-container networking
+  script: |
+    docker run -v /tmp:/tmp/packj
 
 packj-audit-job:
   stage: audit
   image: python:latest
 
-  services:
-    - docker:dind # necessary for docker run
-
   script:
-    - docker run -v /tmp:/tmp/packj
     - git clone https://github.com/ossillate-inc/packj
     - python3 -m venv venv
     - source ./venv/bin/activate
