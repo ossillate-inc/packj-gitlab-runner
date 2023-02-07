@@ -16,7 +16,7 @@ stages: # List of stages for jobs, and their order of execution
 packj-audit-job:
   stage: audit
   image:
-    docker:20.10.16
+    docker:latest
     # python:latest
     # - python:latest
 
@@ -24,8 +24,7 @@ packj-audit-job:
     - docker:dind # necessary for docker run
 
   script:
-    - ls -al
-    - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f requirements.txt
+    - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f pypi:requirements.txt
     # - git clone https://github.com/ossillate-inc/packj
     # - python3 -m venv venv
     # - source ./venv/bin/activate
