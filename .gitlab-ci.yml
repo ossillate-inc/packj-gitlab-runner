@@ -15,7 +15,10 @@ stages: # List of stages for jobs, and their order of execution
 
 packj-audit-job:
   stage: audit
-  image: docker:20.10.16
+  image:
+    # - docker:20.10.16
+    - python:latest
+
   services:
     - docker:dind # necessary for docker run
 
