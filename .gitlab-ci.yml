@@ -16,7 +16,7 @@ packj-audit-job:
     - pip install --upgrade pip
     - pip install -r ./packj/requirements.txt
     # - ls -al
-    - python3 ./packj/main.py --help
+    - python3 ./packj/main.py audit -f requirements.txt
     # - docker run -v /tmp:/tmp/packj -it ossillate/packj:latest --help
 
 comment-job:
