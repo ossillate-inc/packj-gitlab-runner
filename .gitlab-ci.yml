@@ -12,7 +12,7 @@ packj-audit-job:
     - docker run -d --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest help
     - docker cp ./requirements.txt packj-container:/tmp/requirements.txt
     - docker start packj-container
-    - docker exec -t packj-container ls -al
+    - docker exec -t packj-container sh -c "ls -al"
     - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f pypi:/tmp/requirements.txt
 
 comment-job:
