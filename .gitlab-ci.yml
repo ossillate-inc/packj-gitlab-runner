@@ -4,12 +4,12 @@ stages:
 
 packj-audit-job:
   stage: audit
-  image: docker:latest
+  image: docker:20.10.16
   services:
     - docker:dind # necessary for docker run
 
   script:
-    - docker run --name packj-container -v /tmp:/tmp/packj ossillate/packj:latest
+    - docker run -d --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest help
     - docker cp ./requirements.txt packj-container:/tmp/requirements.txt
     - docker exec -t packj-container sh "ls -al"
     - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f pypi:/tmp/requirements.txt
