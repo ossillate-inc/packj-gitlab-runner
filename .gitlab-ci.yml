@@ -10,14 +10,13 @@ packj-audit-job:
     - docker:dind # necessary for docker run
 
   script:
+    - docker run -v /tmp:/tmp/packj
     - git clone https://github.com/ossillate-inc/packj
     - python3 -m venv venv
     - source ./venv/bin/activate
     - pip install --upgrade pip
     - pip install -r ./packj/requirements.txt
-    # - ls -al
     - python3 ./packj/main.py audit -f requirements.txt
-    # - docker run -v /tmp:/tmp/packj -it ossillate/packj:latest --help
 
 comment-job:
   stage: deploy
