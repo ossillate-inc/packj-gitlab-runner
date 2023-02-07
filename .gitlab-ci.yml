@@ -11,7 +11,7 @@ mount-docker-volume:
   # variables:
   #   FF_NETWORK_PER_BUILD: "true" # activate container-to-container networking
   script: |
-    docker run -v /tmp:/tmp/packj -it ossillate/packj:latest
+    docker run -v /tmp:/tmp/packj -t ossillate/packj:latest
 
 packj-audit-job:
   stage: audit
