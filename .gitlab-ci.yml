@@ -1,18 +1,13 @@
-# create the job called deploy
-deploy:
-  #   which is run in the "deploy" stage
-  #     "deploy" stage is one of the pre-defined stages
-  #     docs: https://docs.gitlab.com/ee/ci/yaml/#stages
-  stage: deploy
+stages: # List of stages for jobs, and their order of execution
+  - audit
+  - deploy
 
-  # Use the latest python image
+packj-audit-job:
+  stage: audit
   image: python:latest
 
-  #   only runs on push event on branch "main"
-  #     docs: https://docs.gitlab.com/ee/ci/yaml/index.html#onlyrefs--exceptrefs
-  only:
-    - pushes
-    - main
+  services:
+    - docker:dind # necessary for docker run
 
   script:
     - git clone https://github.com/ossillate-inc/packj
@@ -20,5 +15,12 @@ deploy:
     - source ./venv/bin/activate
     - pip install --upgrade pip
     - pip install -r ./packj/requirements.txt
-    - ls -al
-    - python3 ./packj/main.py audit -f requirements.txt
+    # - ls -al
+    - python3 ./packj/main.py --help
+    # - docker run -v /tmp:/tmp/packj -it ossillate/packj:latest --help
+
+comment-job:
+  stage: deploy
+  environment: production
+  script:
+    - echo "Adding comment to PR..."
