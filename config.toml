@@ -1,4 +1,4 @@
 [[runners]]
-  name = "shell executor runner"
-  executor = "shell"
+  name = "Docker executor runner"
+  executor = "docker"
   shell = "bash"
