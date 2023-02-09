@@ -1,4 +1,0 @@
-[[runners]]
-  name = "Docker executor runner"
-  executor = "docker+machine"
-  shell = "bash"
