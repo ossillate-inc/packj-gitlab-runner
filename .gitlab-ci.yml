@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  DEPENDENCY_FILES: requirements.txt # CHANGE: your dependency files
+  DEPENDENCY_FILES: pypi:requirements.txt # CHANGE: your dependency files
 
 packj-audit-job:
   stage: audit
