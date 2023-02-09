@@ -12,6 +12,8 @@ packj-audit-job:
     - docker:dind # necessary for docker run
 
   script:
+    - echo "$DEPENDENCY_FILES"
+    - /bin/bash
     - |
       input=$(echo "$DEPENDENCY_FILES" | sed 's/,/ /g')
       input_files=()
