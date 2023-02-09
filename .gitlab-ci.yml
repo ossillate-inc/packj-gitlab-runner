@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  DEPENDENCY_FILES: pypi:requirements.txt # CHANGE: your dependency files
+  DEPENDENCY_FILES: requirements.txt # CHANGE: your dependency files
 
 packj-audit-job:
   stage: audit
@@ -13,24 +13,23 @@ packj-audit-job:
 
   script:
     - echo "$DEPENDENCY_FILES"
-    - /bin/bash
-    - |
-      input=$(echo "$DEPENDENCY_FILES" | sed 's/,/ /g')
-      input_files=()
+    # - |
+    #   input=$(echo "$DEPENDENCY_FILES" | sed 's/,/ /g')
+    #   input_files=()
 
-      for item in $input; do
-        if [[ $item == *":"* ]]; then
-                pm_name=$(echo $item | cut -f1 -d:)  
-                dep_file=$(echo $item | cut -f2 -d:)    
-                input_files+=$pm_name":/tmp/packj/"$dep_file" "
-        fi
-      done
+    #   for item in $input; do
+    #     if [[ $item == *":"* ]]; then
+    #             pm_name=$(echo $item | cut -f1 -d:)
+    #             dep_file=$(echo $item | cut -f2 -d:)
+    #             input_files+=$pm_name":/tmp/packj/"$dep_file" "
+    #     fi
+    #   done
 
-      echo "$input_files" > input_files.txt
+    #   echo "$input_files" > input_files.txt
 
     - docker run --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest
     - docker cp ./requirements.txt packj-container:/tmp/packj/requirements.txt
-    - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f $(cat input_files.txt)
+    - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f pypi:/tmp/packj/$DEPENDENCY_FILES
 
 comment-job:
   stage: deploy
