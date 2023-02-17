@@ -17,6 +17,31 @@ packj-audit-job:
     - docker cp ./requirements.txt packj-container:/tmp/packj/requirements.txt
     - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f $DEPENDENCY_FILES
 
+    # Project -> Settings -> Access Tokens, Create token with API scope.
+    # Project -> Settings -> CI/CD -> Variables, Store as CI_API_TOKEN
+    # GET /merge_requests?scope=all&state=opened&source_branch=:branch_name
+    # - |
+    #   merge_request_iid=$( \
+    #     curl --request GET \
+    #       --header "PRIVATE-TOKEN: ${CI_API_TOKEN}" \
+    #       "${CI_API_V4_URL}/merge_requests?scope=all&state=opened&source_branch=${CI_COMMIT_REF_NAME}" | \
+    #     jq .[0].iid \
+    #   )
+
+    # POST /projects/:id/merge_requests/:iid/notes
+    - TITLE='Test Packj Audit Issue'
+    - |
+      curl --request POST \
+        --header "PRIVATE-TOKEN: ${CI_API_TOKEN}" \
+        "${CI_API_V4_URL}/projects/${CI_CONCURRENT_PROJECT_ID}/issues?title=${TITLE}&labels=bug"
+    # - |
+    #   echo $json_data |
+    #   curl --request POST \
+    #     --header "PRIVATE-TOKEN: ${CI_API_TOKEN}" \
+    #     --header "Content-Type: application/json" \
+    #     --data @- \
+    #     "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/merge_requests/${merge_request_iid}/notes"
+
 comment-job:
   stage: deploy
   environment: production
