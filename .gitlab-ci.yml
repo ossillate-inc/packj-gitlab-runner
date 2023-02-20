@@ -11,9 +11,11 @@ packj-audit-job:
   image: docker:20.10.16
   services:
     - docker:dind # necessary for docker run
-    - python:3.8-slim-buster
+    - python:3.10-slim-buster
 
   script:
+    - python3 -V
+    - pip3 -V
     - docker run --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest
     - docker cp ./requirements.txt packj-container:/tmp/packj/requirements.txt
     - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f $DEPENDENCY_FILES
