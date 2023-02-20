@@ -8,14 +8,11 @@ variables:
 
 packj-audit-job:
   stage: audit
-  image: docker:20.10.16
+  image: alpine:3.17.2
   services:
     - docker:dind # necessary for docker run
-    - python:3.10-slim-buster
 
   script:
-    - python3 -V
-    - pip3 -V
     - docker run --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest
     - docker cp ./requirements.txt packj-container:/tmp/packj/requirements.txt
     - docker run -v /tmp:/tmp/packj -t ossillate/packj:latest audit -f $DEPENDENCY_FILES
