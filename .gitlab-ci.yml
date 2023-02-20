@@ -11,7 +11,7 @@ packj-audit-job:
   image: docker:20.10.16
   services:
     - docker:dind # necessary for docker run
-    - curlimages/curl:7.87.0
+    - python:3.8-slim-buster
 
   script:
     - docker run --name packj-container -v /tmp:/tmp/packj -t ossillate/packj:latest
